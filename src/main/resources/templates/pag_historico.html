@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{template.html}">
+
+<head>
+    <title>Historico</title>
+</head>
+
+<body>
+    <div layout:fragment="conteudo">
+
+        <h2>Historico</h2>
+
+        <form method="get" th:action="@{/historico}">
+            <label>Data Início:</label>
+            <input type="date" name="dataInicio" />
+
+            <label>Data Fim:</label>
+            <input type="date" name="dataFim" />
+
+            <button type="submit">Filtrar</button>
+        </form>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data da leitura</th>
+                    <th>Umidade</th>
+                    <th>Sensor foi ligado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="item: ${lista}">
+                    <td th:text="${item.dataHora}"></td>
+                    <td th:text="${item.umidade}"></td>
+                    <td th:text="${item.irrigacaoLigada}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -19,8 +19,10 @@ public class MonitoramentoController {
 
     @GetMapping
     public String carregarMonitoramento(Model model) {
-        var l = leituraSensorRepository.findById(new Long(1));
-        model.addAttribute("item", l.get());
+        var l = leituraSensorRepository.findTopByOrderByDataHoraDesc();
+        model.addAttribute("item", l);
         return "pag_monitoramento";
     }
+
+    
 }
