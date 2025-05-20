@@ -17,30 +17,29 @@ import campo.projeto.domain.leituraSensor.LeituraSensorRepository;
 @Controller
 @RequestMapping("/historico")
 public class HistoricoController {
-     private final LeituraSensorRepository leituraSensorRepository;
+    private final LeituraSensorRepository leituraSensorRepository;
 
     public HistoricoController(LeituraSensorRepository l) {
         this.leituraSensorRepository = l;
     }
 
     @GetMapping
-     public String buscarHistorico(
-        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
-        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
-        Model model
-    ) {
+    public String buscarHistorico(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
+            Model model) {
         List<LeituraSensor> leituras;
 
-        if (dataInicio != null) {
-            if(dataFim == null) {
-                dataFim = LocalDate.now();
-            }
-            LocalDateTime inicio = dataInicio.atStartOfDay();
-            LocalDateTime fim = dataFim.atTime(23, 59, 59);
-            leituras = leituraSensorRepository.findByDataHoraBetween(inicio, fim);
-        } else {
-            leituras = leituraSensorRepository.findAll();
+        if (dataInicio == null) {
+            dataInicio = LocalDate.now();
         }
+        
+        if (dataFim == null) {
+            dataFim = LocalDate.now();
+        }
+        LocalDateTime inicio = dataInicio.atStartOfDay();
+        LocalDateTime fim = dataFim.atTime(23, 59, 59);
+        leituras = leituraSensorRepository.findByDataHoraBetween(inicio, fim);
 
         model.addAttribute("lista", leituras);
         return "pag_historico";
