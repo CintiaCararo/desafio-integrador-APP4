@@ -1,23 +1,47 @@
 <!-- arquivo de layout base que define a estrutura comum para várias páginas do site -->
 
 <!DOCTYPE html>
-<html lang="pt" 
-    xmlns:th="http://thymeleaf.org" 
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="pt" xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
     <title>Desagio</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../static/css/estilo.css" th:href="@{/css/estilo.css}">
 </head>
 
 <body>
-    
+
+    <nav>
+        <ul>
+            <li>
+                <a th:href="@{/index}">Home</a>
+            </li>
+
+            <li sec:authorize="isAuthenticated()">
+                <a href="./pag_monitoramento.html" th:href="@{/monitoramento}">Ver última leitura</a>
+            </li>
+
+            <li sec:authorize="isAuthenticated()">
+                <a href="./pag_historico.html" th:href="@{/historico}">Consultar histórico</a>
+            </li>
+
+            <li sec:authorize="isAnonymous()">
+                <a href="./login.html" th:href="@{/login}">Login</a>
+            </li>
+
+            <li sec:authorize="isAuthenticated()">
+                <a href="./logout.html" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+
     <div layout:fragment="conteudo" th:remove="tag"></div>
-    
+
     <script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
 </body>
 
